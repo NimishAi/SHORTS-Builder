@@ -13,7 +13,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" suppressHydrationWarning="true">
+    <html lang="en" suppressHydrationWarning="true" className="dark" style={{colorScheme:"dark"}}>
       <body
         className={`${outFit.className}`}
       >
