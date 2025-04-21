@@ -3,16 +3,24 @@ import React, { useEffect, useState, useContext } from 'react'
 import { ThemeProvider as NextThemesProvider } from "next-themes"
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import { AuthContext } from './_context/AuthContext'
+import { useMutation } from "convex/react";
+import {api} from "@/convex/_generated/api";
 
 function Provider({children}) {
   const [user, setUser] = useState(null);
-
-
+  const CreateUser = useMutation(api.users.CreateNewUser);
+ 
   useEffect(() => {
     const auth = getAuth(); 
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setUser(user);
+        const result = CreateUser({
+          name: user.displayName,
+          email: user.email,
+          pictureUrl: user.photoURL
+        });
+        console.log("User created", result);
         // User is signed in, see docs for a list of available properties
         // https://firebase.google.com/docs/reference/js/firebase.User
         const uid = user.uid;
@@ -30,7 +38,7 @@ function Provider({children}) {
   , [])
   return (
     <div>
-       <AuthContext.Provider value={{ user }}>
+      <AuthContext.Provider value={{ user }}>
           <NextThemesProvider 
               attribute="class" 
               defaultTheme="dark" 
