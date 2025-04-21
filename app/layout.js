@@ -1,6 +1,6 @@
 import { Outfit } from "next/font/google";
 import "./globals.css";
-import Provider from "./provider";
+import ConvexClientProvider from "./ConvexClientProvider";
 
 const outFit = Outfit({
   subsets: ["latin"],
@@ -17,9 +17,9 @@ export default function RootLayout({ children }) {
       <body
         className={`${outFit.className}`}
       >
-        <Provider>
+        <ConvexClientProvider>
           {children}
-        </Provider>
+        </ConvexClientProvider>
       </body>
     </html>
   );
